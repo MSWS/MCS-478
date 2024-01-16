@@ -17,5 +17,24 @@
 
 \section*{Problem 1.4}
 
-
+\section*{Problem 1.5}
+For simplicity's sake, I'll be using A, B, C, D as the alphabet.
+\begin{enumerate}[label=(\alph*)]
+    \item \(4! = 4 \cdot 3 \cdot 2 \cdot 1 = 24 \text{ possible substitution ciphers}\)
+    \item \begin{enumerate}[label=(\roman*)]
+        \item For no fixed letters, A can map to B, C, or D, so\dots
+        \begin{equation*}
+            3 \cdot 2 \cdot 1 = 6 \text { possible substitution ciphers that have no letters fixed}
+        \end{equation*}
+        \item For at least one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet
+        \begin{equation*}
+            4 \cdot 3 \cdot 2 \cdot 1 = 24 \text { possible substitution ciphers that have at least one letter fixed}
+        \end{equation*}
+        \item For only one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet
+        without any fixed letters, so\dots
+        \begin{equation*}
+            4 \cdot 2 \cdot 1 = 8 \text { possible substitution ciphers that have one letter fixed}
+        \end{equation*}
+    \end{enumerate}
+\end{enumerate}
 \end{document}

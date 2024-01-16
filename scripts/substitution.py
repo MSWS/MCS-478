@@ -21,6 +21,18 @@ LJNRB GKHRT QJRUU RBJLW JNRZI TULGI EZLUK JRUST QZLUK EURFT JNLKJ JNRXR S"""
     sortedKeys = sorted(letterCount, key=letterCount.get, reverse=True)
     for key in sortedKeys:
         print(key, letterCount[key])
+    
+    mappings = {
+        'r': 'e',
+        'j': 't',
+        'i': 'a'
+    }
+
+    for letter in text.lower():
+        if letter in mappings:
+            print(mappings[letter], end='')
+        else:
+            print(letter, end='')
 
 if __name__ == '__main__':
     main()
