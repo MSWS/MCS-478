@@ -5,6 +5,7 @@
 \usepackage{enumitem}
 
 \author{Isaac Boaz}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
 \begin{document}
 
@@ -12,7 +13,7 @@
 \begin{enumerate}[label=(\alph*)]
     \item ITHINKTHATISHALLNEVERSEEABILLBOARDLOVELYASATREE
     \item LOVEISNOTLOVEWHICHALTERSWHENITALTERATIONFINDS
-    \item INBAITINGAMOUSETRAPWITHCHEESEALWAYSLEAVEROOMFORTHEMOUSE 
+    \item INBAITINGAMOUSETRAPWITHCHEESEALWAYSLEAVEROOMFORTHEMOUSE
 \end{enumerate}
 
 \section*{Problem 1.4}
@@ -22,19 +23,58 @@ For simplicity's sake, I'll be using A, B, C, D as the alphabet.
 \begin{enumerate}[label=(\alph*)]
     \item \(4! = 4 \cdot 3 \cdot 2 \cdot 1 = 24 \text{ possible substitution ciphers}\)
     \item \begin{enumerate}[label=(\roman*)]
-        \item For no fixed letters, A can map to B, C, or D, so\dots
-        \begin{equation*}
-            3 \cdot 2 \cdot 1 = 6 \text { possible substitution ciphers that have no letters fixed}
-        \end{equation*}
-        \item For at least one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet
-        \begin{equation*}
-            4 \cdot 3 \cdot 2 \cdot 1 = 24 \text { possible substitution ciphers that have at least one letter fixed}
-        \end{equation*}
-        \item For only one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet
-        without any fixed letters, so\dots
-        \begin{equation*}
-            4 \cdot 2 \cdot 1 = 8 \text { possible substitution ciphers that have one letter fixed}
-        \end{equation*}
-    \end{enumerate}
+              \item For no fixed letters, A can map to B, C, or D, so\dots
+                    \begin{equation*}
+                        3 \cdot 2 \cdot 1 = 6 \text { possible substitution ciphers that have no letters fixed}
+                    \end{equation*}
+              \item For at least one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet.
+                    \begin{equation*}
+                        4 \cdot 3 \cdot 2 \cdot 1 = 24 \text { possible substitution ciphers that have at least one letter fixed}
+                    \end{equation*}
+              \item For only one fixed letter, we have 4 choices for the fixed letter, and then we simply deal with a 3-letter alphabet.
+                    without any fixed letters, so\dots
+                    \begin{equation*}
+                        4 \cdot 2 \cdot 1 = 8 \text { possible substitution ciphers that have exactly one letter fixed}
+                    \end{equation*}
+              \item For exactly two fixed letters, we first have \(4 \cdot 3\) choices for the fixed letters, and then we simply deal with a 2-letter alphabet.
+                    \begin{equation*}
+                        4 \cdot 3 \cdot 1 = 12 \text { possible substitution ciphers that have exactly two letters fixed}
+                    \end{equation*}
+          \end{enumerate}
 \end{enumerate}
+\section*{Problem 1.9}
+\begin{enumerate}[label=(\alph*)]
+    \item gcd(291, 252)
+          \begin{align*}
+              291 & = 252 (1) + 39       \\
+              252 & = 39 (6) + 18        \\
+              39  & = 6 (6) + \mathbf{3} \\
+              6   & = 6 (1) + 0          \\
+                  & \rightarrow 3
+          \end{align*}
+    \item gcd(16261, 86562)
+          \begin{align*}
+              86562 & = 16261 (5) + 5257    \\
+              16261 & = 5257 (3) + 490      \\
+              5257  & = 490 (10) + 357      \\
+              490   & = 357 (1) + 133       \\
+              357   & = 133 (2) + 91        \\
+              133   & = 91 (1) + 42         \\
+              91    & = 42 (2) + \mathbf{7} \\
+              42    & = 7 (7) + 0           \\
+                    & \rightarrow 7
+          \end{align*}
+\end{enumerate}
+\section*{Problem 1.17}
+\begin{enumerate}[label=(\alph*)]
+    \item \(347 + 513 = 860 \equiv 97 \Mod{763}\)
+    \item \(3264 + 1238 + 7231 + 6437 = 18170 \equiv 8916 \Mod{9254}\)
+    \item \(153 \cdot 287 = 43851 \equiv 79 \Mod{353}\)
+    \item \(357 \cdot 862 \cdot 193 = 59392662 \equiv 1545\Mod{8157}\)
+    \item \(5327 \cdot 6135 \cdot 7139 \cdot 2187 \cdot 5219 \cdot 1873 = 4.06854 \times 10^{23} \equiv 603\Mod{8157}\)
+    \item \(137^2 = 18769 \equiv 137 \Mod{327}\)
+    \item \(373^6 = 2693103168443689 \equiv 463 \Mod{581}\)
+    \item \(23^3 \cdot 19^5 \cdot 11^4 = 441084963939653 \equiv 93\)
+\end{enumerate}
+\section*{Problem 1.26}
 \end{document}
