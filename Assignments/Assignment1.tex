@@ -4,10 +4,12 @@
 \usepackage{amssymb}
 \usepackage{enumitem}
 
+\title{\vspace{-4em}M/CS 478 Assignment 1}
 \author{Isaac Boaz}
 \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
 \begin{document}
+\maketitle
 
 \section*{Problem 1.2}
 \begin{enumerate}[label=(\alph*)]
@@ -17,6 +19,11 @@
 \end{enumerate}
 
 \section*{Problem 1.4}
+THESE CHARA CTERS ASONE MIGHT READI LYGUE SSFOR MACIP HERTH ATIST OSAYT HEYCO
+NVEYA MEANI NGBUT THENF ROMWH ATISK NOWNO FCAPT AINKI DDICO ULDNO TSUPP
+OSEHI MCAPA BLEOF CONST RUCTI NGANY OFTHE MOREA BSTRU SECRY PTOGR APHSI MADEU
+PMYMI NDATO NCETH ATTHI SWASO FASIM PLESP ECIES SUCHH OWEVE RASWO ULDAP PEART
+OTHEC RUDEI NTELL ECTOF THESA ILORA BSOLU TELYI NSOLU BLEWI THOUT THEKE Y
 
 \section*{Problem 1.5}
 For simplicity's sake, I'll be using A, B, C, D as the alphabet.
@@ -77,4 +84,39 @@ For simplicity's sake, I'll be using A, B, C, D as the alphabet.
     \item \(23^3 \cdot 19^5 \cdot 11^4 = 441084963939653 \equiv 93\)
 \end{enumerate}
 \section*{Problem 1.26}
+\begin{enumerate}[label=(\alph*)]
+    \item \(17^{183} \Mod{256}\)
+          \begin{align*}
+              183_{10}           & = 10110111_2 \rightarrow                                          & 17^2 = 289 \equiv 33          \\
+              17^{183} \Mod{256} & \equiv 17^{128} \times 17^{32} \times \cdots                      & 17^4 \equiv 33^2 \equiv 65    \\
+                                 & \equiv 1 \times 1 \times 1 \times 1 \times 65 \times 33 \times 17 & 17^8 \equiv 65^2 \equiv 129   \\
+                                 & \equiv   36465                                                    & 17^{16} \equiv 129^2 \equiv 1 \\
+                                 & \equiv       113 \Mod{256}                                        & 17^{32} \equiv 1^2 \equiv 1   \\
+                                 &                                                                   & 17^{64} \equiv 1^2 \equiv 1   \\
+                                 &                                                                   & 17^{128} \equiv 1^2 \equiv 1  \\
+          \end{align*}
+    \item \(2^{477} \Mod{1000}\)
+          \begin{align*}
+              477_{10}           & = 111011101_2 \rightarrow                                                       & 2^2 \equiv 4       \\
+              2^{477} \Mod{1000} & \equiv 2^{256} \times 2^{128} \times 2^{64} \times 2^{16} \times 2^8 \times 2^4 & 2^8 \equiv 256     \\
+                                 & \equiv 936 \times 456 \times 616 \times 536 \times 256 \times 16 \times 2       & 2^{16} \equiv 536  \\
+                                 & \equiv 272 \Mod{1000}                                                           & 2^{32} \equiv 296  \\
+                                 &                                                                                 & 2^{64} \equiv 616  \\
+                                 &                                                                                 & 2^{128} \equiv 456 \\
+                                 &                                                                                 & 2^{256} \equiv 936 \\
+                                 &                                                                                 &                    \\
+                                 &                                                                                 &
+          \end{align*}
+    \item \(11^{507} \Mod{1237}\)
+          \begin{align*}
+              507_{10}            & = 111111011_2 \rightarrow                                                                            & 11^2 \equiv 121     \\
+              11^{507} \Mod{1237} & \equiv 11^{256} \times 11^{128} \times 11^{64} \times 11^{32} \times 11^{16} \times 11^8 \times 11^2 & 11^4 \equiv 1034    \\
+                                  & \equiv 380 \times 748 \times 1128 \times 830 \times 867 \times 388 \times 121  \times 11             & 11^8 \equiv 388     \\
+                                  & \equiv 322 \Mod{1237}                                                                                & 11^{16} \equiv 867  \\
+                                  &                                                                                                      & 11^{32} \equiv 830  \\
+                                  &                                                                                                      & 11^{64} \equiv 1128 \\
+                                  &                                                                                                      & 11^{128} \equiv 748 \\
+                                  &                                                                                                      & 11^{256} \equiv 380 \\
+          \end{align*}
+\end{enumerate}
 \end{document}
