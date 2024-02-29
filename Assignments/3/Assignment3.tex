@@ -1,0 +1,209 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{cancel}
+\usepackage{listings}
+\usepackage{geometry}[margin=1in]
+\usepackage{tikz}
+
+\title{\vspace*{-4em}M/CS 478 Assignment 3}
+\author{Isaac Boaz}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+\maketitle
+
+\section*{2.17}
+\begin{enumerate}[label=(\alph*)]
+    \item \(11^x = 21 \text{ in } \mathbb{F}_{71}\) \\
+          Using Shanks's babystep-giantstep method, let's first
+          populate the table for \([1, m]\) where \(m = \lceil \sqrt{71} \rceil = 9\)
+          \begin{center}
+              \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+                  \hline
+                  11 & 50 & 53 & 15 & 23 & 40 & 14 & 12 & 61 \\
+                  \hline
+              \end{tabular}
+          \end{center}
+
+          Using Fermat's Little Theorem \footnote{Since 11 is a primitive root mod 71}, we can find the "bottom" cell of the table:
+          \begin{align*}
+              20x \equiv 1 \Mod{71} &              \\
+              71                    & = 3(20) + 11 \\
+              20                    & = 1(11) + 9  \\
+              11                    & = 1(9) + 2   \\
+              9                     & = 4(2) + 1   \\
+              2                     & = 2(1) + 0
+          \end{align*}
+          \begin{align*}
+              1       & = 9 - 4(2)              \\
+                      & = 9 - 4(11 - 9)         \\
+                      & = 5(9) - 4(11)          \\
+                      & = 5(20 - 11) - 4(11)    \\
+                      & = 5(20) - 9(11)         \\
+                      & = 5(20) - 9(71 - 3(20)) \\
+                      & = 32(20) - 9(71)        \\
+              20^{-1} & = 32 \Mod{71}
+          \end{align*}
+          Finally we multiply by the inverse to find the answer:
+          \begin{align*}
+              21 \times 32 & = 33 \Mod{71} \\
+              \times 32    & = 62 \Mod{71} \\
+              \times 32    & = 67 \Mod{71} \\
+              \times 32    & = 14 \Mod{71} \\
+          \end{align*}
+          Since 14 was in the top row of the table, and we multiplied by the inverse (ie went up)
+          4 times, we know the correct cell is in the 7th column, 4th row. Thus
+          \(x = 3(10) + 7 = 37\).
+
+          Plugging this back into the original equation, we get
+          \(11^{37} = 21 \Mod{71}\), which is true.
+\end{enumerate}
+
+\pagebreak
+
+\section*{3.7}
+Alice publishes her RSA public key: modulus \(N = 2038667\) and exponent \(e = 103\).
+\begin{enumerate}[label=(\alph*)]
+    \item Bob wants to send alice the message \(m = 892383\). What ciphertext does Bob send to Alice?
+          The formula for calculating ciphertext is
+          \begin{equation*}
+              m^e \equiv c \Mod{N}
+          \end{equation*}
+          Thus, Bob simply needs to calculate
+          \begin{align*}
+              892383^{103} & \equiv c \Mod{2038667}     \\
+              c            & \equiv 45293 \Mod{2038667}
+          \end{align*}
+    \item Alice knows that her modulus factors into a product of two primes, one of which is \(p = 1301\).
+          Find a decryption exponent \(d\) for Alice.
+
+          We know that \(N = 2038667 = p \cdot q\), and that \(e\) is the public exponent.
+          We also know that \(d\) is the private exponent, and that \(d\) is the modular inverse of \(e\) mod \(\phi(N)\).
+          We can calculate \(\phi(N)\) using the formula \(\phi(N) = (p-1)(q-1)\).
+          \begin{align*}
+              \phi(N) & = (1301-1)(1567-1) \\
+                      & = 1300 \cdot 1566  \\
+                      & = 2035800
+          \end{align*}
+
+          We can then calculate the modular inverse of \(e\) mod \(\phi(N)\) using the extended Euclidean algorithm.
+          \begin{align*}
+              2035800 & = 19765(103) + 5 \\
+              103     & = 20(5) + 3      \\
+              5       & = 1(3) + 2       \\
+              3       & = 1(2) + 1
+          \end{align*}
+          \begin{align*}
+              1        & = 3 - 2                             \\
+                       & = 3 - (5 - 3)                       \\
+                       & = 2(3) - 5                          \\
+                       & = 2(103 - 20(5)) - 5                \\
+                       & = 2(103) - 41(5)                    \\
+                       & = 2(103) - 41(2035800 - 19765(103)) \\
+                       & = 810367(103) - 41(2035800)         \\
+              103^{-1} & = 810367 \Mod{2035800}
+          \end{align*}
+          Since \(ed \equiv 1 \Mod{\phi{(n)}}\), \(d = e^{-1} = 810367\).
+    \item Alice receives the ciphertext \(c = 317730\) from Bob. Decrypt the message.
+          The formula for calculating the plaintext is
+          \begin{equation*}
+              c^d \equiv m \Mod{N}
+          \end{equation*}
+          Thus, Alice simply needs to calculate
+          \begin{align*}
+              317730^{810367} & \equiv m \Mod{2038667}      \\
+              m               & \equiv 514407 \Mod{2038667}
+          \end{align*}
+          Thus, Alice receives the message \(m = 514407\).
+\end{enumerate}
+
+\section*{3.11}
+Here is an example of a proposed public key system.
+
+Alice chooses two large primces \(p\) and \(q\) and she publishes \(N = pq\).
+It is assumed that \(N\) is hard to factor. Alice chooses three random numbers
+\(g, r_1, \text{ and } r_2\) modulo \(N\) and computes
+\begin{equation*}
+    g_1 \equiv g^{r_1(p-1)} \Mod{N} \text{ and } g_2 \equiv g^{r_2(q-1)} \Mod {N}.
+\end{equation*}
+
+Her public key is the triple \((N, g_1, g_2)\) and her private key is the pair of
+primes \((p, q)\). Now Bob wants to send the message \(m\) to Alice where \(m\) is
+a number modulo \(N\). He chooses two random integers \(s_1, s_2\) modulo \(N\) and computes
+\begin{equation*}
+    c_1 \equiv m \cdot g_1^{s_1} \Mod{N} \text{ and } c_2 \equiv m \cdot g_2^{s_2} \Mod{N}.
+\end{equation*}
+
+Bob sends the ciphertext \((c_1, c_2)\) to Alice. Alice decrypts the message using the
+Chinese Remainder Theorem.
+
+\begin{equation*}
+    x \equiv c_1 \Mod{p} \text{ and } x\equiv c_2 \Mod{q}
+\end{equation*}
+
+
+\begin{enumerate}[label=(\alph*)]
+    \item Prove that Alice's solution \(x\) is equal to Bob's plaintext \(m\).
+          \begin{align*}
+              c_1 & \equiv mg_1^{s_1}            \Mod{p}      \\
+                  & \equiv {mg^{r_1(p-1)}}^{s_1} \Mod{p}      \\
+                  & \equiv {mg^{r_1s_1(p-1)}}    \Mod{p}      \\
+                  & \equiv {mg^{(p-1)}}^{r_1s_1} \Mod{p}      \\
+                  & \equiv {m1}^{r_1s_1}         \Mod{p}      \\
+                  & \equiv m \Mod{p}                          \\
+              c_2 & \equiv mg_2^{s_2}                         \\
+                  & \equiv {mg^{r_2(q-1)}}^{s_2} \Mod{q}      \\
+                  & \equiv {mg^{r_2s_2(q-1)}}    \Mod{q}      \\
+                  & \equiv {mg^{(q-1)}}^{r_2s_2} \Mod{q}      \\
+                  & \equiv {m\cdot1}^{r_2s_2}         \Mod{q} \\
+                  & \equiv m \Mod{q}
+          \end{align*}
+          \begin{align*}
+              x \equiv c_1  \equiv m \Mod{p} \\
+              x \equiv c_2  \equiv m \Mod{q}
+          \end{align*}
+          Since the CRT guarantees a unique solution modulo \(N\), the solution
+          that Alice finds \textit{must} be equal to \(m\).
+          \begin{align*}
+              x & \equiv m \Mod{p} \\
+              x & \equiv m \Mod{q}
+          \end{align*}
+    \item Since this uses the Chinese Remainder Theorem, \(m\) must be smaller than both \(p\) and \(q\),
+          otherwise CRT could return \(m + xN\).
+
+          Additionally, given the two ciphertexts \((c_1, c_2)\), the following attack is possible:
+          \begin{align*}
+              c_1 \cdot c_2 ^ {-1} & \equiv (m \cdot g_1^{s_1})(m\cdot g_2^{s_2})^{-1}                     \\
+                                   & \equiv m^2 \cdot g_1^{s_1} \cdot g_2^{-s_2}                           \\
+                                   & \equiv m^2 \cdot ({g^{r_1(p-1)}}^{s_1}) \cdot ({g^{r_2(q-1)}}^{-s_2}) \\
+                                   & \equiv m^2 \cdot 1^{s_1} \cdot 1^{-s_2}                               \\
+                                   & \equiv m^2
+          \end{align*}
+\end{enumerate}
+
+\section*{3.13}
+Alice decides to use RSA with the public key \(N = 1889570071\). In order to guard against
+transmission errors, Alice has Bob encrypt his message twice, once using the encryption
+exponent \(e_1 = 1021763679\) and once using the encryption exponent \(e_2 = 519424709\).
+Eve intercepts the two encrypted messages
+\begin{equation*}
+    c_1 = 1244183534 \text{ and } c_2 = 732959706
+\end{equation*}
+
+Assume Eve also knows \(N\) and the two ecnryption exponents \(e_1, e_2\), help Eve recover
+Bob's plaintext without finding a factorization of \(N\).
+
+Since the gcd\((c_1, c_2) = 1\), Eve can calculate a soultion to
+\begin{equation*}
+    e_1 \cdot u + e_2 \cdot v = 1
+\end{equation*}
+and then use \(u, v\) to calculate
+\begin{align*}
+    c_1^u \cdot c_2^v & = m^{e_1\cdot u + e_2 \cdot v} \Mod{N} \\
+                      & = m^{\text{gcd}(e_1, e_2)} \Mod{N}     \\
+                      & = m^1
+\end{align*}
+\end{document}
