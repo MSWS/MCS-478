@@ -206,4 +206,61 @@ and then use \(u, v\) to calculate
                       & = m^{\text{gcd}(e_1, e_2)} \Mod{N}     \\
                       & = m^1
 \end{align*}
+
+\section*{3.15}
+Use the Miller-Rabin test on each of the following numbers. In each case, either
+provide a Miller-Rabin witness for the compositeness of \(n\), or conclude that
+\(n\) is probably prime by providing 10 numbers that are not Miller-Rabing
+withnesses for \(n\).
+\begin{enumerate}[label=(\alph*)]
+    \item \(n = 1105\)
+          \begin{align*}
+              1105 - 1 & = 2^4 \cdot 69 & \text{ thus } s = 4, d = 69 \\
+          \end{align*}
+          \begin{enumerate}[label=\arabic*.]
+              \item
+                    \(a = 2\)
+                    \begin{align*}
+                        x   & = 2^{69} \Mod{1105}             \\
+                            & = 967                           \\
+                        x^2 & = 967^2 \Mod{1105}              \\
+                            & = 259                           \\
+                        x^4 & = 259^2 \Mod{1105}              \\
+                            & = 781                           \\
+                        x^8 & = 781^2 \Mod{1105}              \\
+                            & = 1, \text{ 1105 is composite } \\
+                    \end{align*}
+          \end{enumerate}
+    \item \(n = 294409\)
+          \begin{align*}
+              294409 - 1 & = 2^3 \cdot 36801 & \text{ thus } s = 3, d = 36801 \\
+          \end{align*}
+          \begin{enumerate}[label=\arabic*.]
+              \item \(a = 2\)
+                    \begin{align*}
+                        x   & = 2^{36801} \Mod{294409}          \\
+                            & = 512                             \\
+                        x^2 & = 512^2 \Mod{294409}              \\
+                            & = 262144                          \\
+                        x^4 & = 262144^2 \Mod{294409}           \\
+                            & = 1, \text{ 294409 is composite } \\
+                    \end{align*}
+          \end{enumerate}
+          \addtocounter{enumi}{2}
+    \item \(n = 118901521\)
+          \begin{align*}
+              118901521 - 1 & = 2^4 \cdot 7431345 & \text{ thus } s = 4, d = 7431345 \\
+          \end{align*}
+          \begin{enumerate}[label=\arabic*.]
+              \item \(a = 2\)
+                    \begin{align*}
+                        x   & = 2^{7431345} \Mod{118901521}        \\
+                            & = 45274074                           \\
+                        x^2 & = 45274074^2 \Mod{118901521}         \\
+                            & = 1758249                            \\
+                        x^4 & = 1758249^2 \Mod{118901521}          \\
+                            & = 1, \text{ 118901521 is composite } \\
+                    \end{align*}
+          \end{enumerate}
+\end{enumerate}
 \end{document}
