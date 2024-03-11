@@ -28,7 +28,7 @@
               \end{tabular}
           \end{center}
 
-          Using Fermat's Little Theorem \footnote{Since 11 is a primitive root mod 71}, we can find the "bottom" cell of the table:
+          Using Fermat's Little Theorem\footnote{Since 71 is a prime}, we can find the `bottom' cell of the table:
           \begin{align*}
               20x \equiv 1 \Mod{71} &              \\
               71                    & = 3(20) + 11 \\
@@ -54,7 +54,7 @@
               \times 32    & = 67 \Mod{71} \\
               \times 32    & = 14 \Mod{71} \\
           \end{align*}
-          Since 14 was in the top row of the table, and we multiplied by the inverse (ie went up)
+          Since 14 was in the top row, 7th column of the table, and we multiplied by the inverse (ie went up)
           4 times, we know the correct cell is in the 7th column, 4th row. Thus
           \(x = 3(10) + 7 = 37\).
 
@@ -202,9 +202,9 @@ Since the gcd\((c_1, c_2) = 1\), Eve can calculate a soultion to
 \end{equation*}
 and then use \(u, v\) to calculate
 \begin{align*}
-    c_1^u \cdot c_2^v & = m^{e_1\cdot u + e_2 \cdot v} \Mod{N} \\
-                      & = m^{\text{gcd}(e_1, e_2)} \Mod{N}     \\
-                      & = m^1
+    c_1^u \cdot c_2^v & \equiv m^{e_1\cdot u + e_2 \cdot v} \Mod{N} \\
+                      & \equiv m^{\text{gcd}(e_1, e_2)} \Mod{N}     \\
+                      & \equiv m^1
 \end{align*}
 
 \section*{3.15}

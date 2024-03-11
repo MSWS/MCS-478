@@ -1,0 +1,279 @@
+\documentclass{article}
+
+\usepackage[tmargin=0.1in, bmargin=0.25in, lmargin = 0.1in, rmargin = 0.25in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{cancel}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\begin{document}
+\small
+\begin{multicols*}{2}
+    \subsection*{Multiplication Principle}
+
+    \begin{tabular}{|r|c|c|}
+        \hline
+                  & Repetition           & No Repitition           \\
+        \hline
+        Ordered   & \(n^r\)              & \(\frac{n!}{(n-r)!}\)   \\
+        Unordered & \(\binom{n+r-1}{r}\) & \(\frac{n!}{r!(n-r)!}\) \\
+        \hline
+    \end{tabular}
+    \begin{equation*}
+        P(A \mid B) = \frac{P(A \cup B)}{P(B)}
+    \end{equation*}
+
+    \section*{Basic Number Theory}
+    \subsection*{Euclidean Algorithm}
+    % Runtime is linear with the number of digits in the input
+    % Eg: 2x100 digit numbers would take ~200 steps, not a thousand
+    \subsubsection*{\(ax +by = d\)}
+    % Can always express the gcd of two numbers as a linear combination of them
+    \begin{align*}
+        \text{gcd}(6, 10) & = 2             \\
+        2                 & = 10x + 6y      \\
+                          & = 10(-1) + 6(2)
+    \end{align*}
+    \subsection*{Congruence Theory}
+    \subsection*{Fast Powering Algorithm}
+    \begin{multicols*}{2}
+        \begin{align*}
+            2^{100} \Mod{5} & \equiv 2^{64} \cdot 2^{32} \cdot 2^{4} \Mod{5} \\
+                            & \equiv 1 \cdot 4 \Mod{5}                       \\
+                            & \equiv 4 \Mod{5}
+        \end{align*}
+        \columnbreak
+        \begin{align*}
+            2^1 & = 2 \Mod{5} \\
+            2^2 & = 4 \Mod{5} \\
+            2^4 & = 1 \Mod{5} \\
+        \end{align*}
+    \end{multicols*}
+    \subsection*{Fermat's Little Theorem}
+    If \(p \nmid a \land p \text{ is prime } \implies a^{p-1} \equiv 1\Mod{p}\)
+    \subsection*{Euler's Theorem}
+    \(a^{\phi{(n)}} \equiv 1 \Mod{n}\)
+    \subsection*{Primitve Root Theorem}
+    Every prime \(p\) has a primitive root
+    \section*{Cryptography}
+    \subsection*{Symmetric}
+    \subsubsection*{Ideal Requirements}
+    \begin{enumerate}[label=\arabic*)]
+        \item With key it should be easy to encrypt/decrpyt.
+        \item Without key it should be difficult to encrypt/decrypt.
+        \item Even with lots of plaintexts <-> combinations, it should be difficult to find the key.
+        \item Choosen plaintext attack: Attacker can choose plaintexts and see the corresponding ciphertexts.
+    \end{enumerate}
+    \subsubsection*{Multiplication} vulnerable to plaintext <-> cyphertext attacks
+    \begin{equation*}
+        E(x) = x \cdot k \Mod{n}
+    \end{equation*}
+    \columnbreak
+    \section*{Primality Testing}
+    \subsection*{Miller-Rabin Test} builds off of Fermat's Test
+    \begin{description}
+        \item[Probabilistic] \(\rightarrow\) try 100 candidates (to be witnesses)
+        \item[If \(n\) is composite] overwhelmingly likely to find a witness
+    \end{description}
+    \begin{equation*}
+        \text{If } n \text{ is prime}, a^{n-1} \equiv 1 \Mod{n}
+    \end{equation*}
+    \begin{enumerate}
+        \item Make a table where \(n-1 = 2^kq, q \in \text{Odd}\)
+              \begin{equation*}
+                  a^q, a^{2q}, a^{4q}, \ldots, a^{2^{k-1}q}
+              \end{equation*}
+        \item Either first number is 1 (probably prime), or one of the numbers
+              is -1
+        \item Last number \textbf{has} to be 1 (we passed Fermat's test)
+        \item If second to last number is not 1, then \(n\) is composite
+        \item Consider the first term in the sequence congruent to 1. If the
+              preceding term is \textit{not} congruent to -1, then \(n\) is
+              composite.
+    \end{enumerate}
+    \begin{multicols*}{2}
+        \begin{minipage}{\columnwidth}
+            \begin{align*}
+                n = 252601, n-1 = 2^3 \cdot  31575 \\
+                a = 85132
+            \end{align*}
+            \begin{align*}
+                a^{31575}         & \equiv 191102 \Mod {n} \\
+                a^{2 \cdot 31575} & \equiv 184829 \Mod {n} \\
+                a^{4 \cdot 31575} & \equiv 1 \Mod {n}
+            \end{align*}
+            \textit{Conclusion:} \(n\) \textit{is \textbf{composite}.}
+            \begin{align*}
+                n = 104717, n-1 = 2^2 \cdot 26179 \\
+                a = 96152
+            \end{align*}
+            \begin{align*}
+                a^{26179} & \equiv 1 \Mod {n}
+            \end{align*}
+            \textit{Conclusion:} \(n\) \textit{is \textbf{probably prime}}.
+        \end{minipage}
+        \columnbreak
+        \begin{minipage}{\columnwidth}
+            \begin{align*}
+                n = 3057601, n-1 = 2^6 \cdot 47775 \\
+                a = 99908
+            \end{align*}
+            \begin{align*}
+                a^{47775}           & \equiv 1193206 \Mod {n} \\
+                a^{2 \cdot 47775}   & \equiv 2286397 \Mod {n} \\
+                a^{2^2 \cdot 47775} & \equiv 235899 \Mod {n}  \\
+                a^{2^3 \cdot 47775} & \equiv 1 \Mod {n}
+            \end{align*}
+            \textit{Conclusion:} \(n\) \textit{is \textbf{composite}.}
+            \begin{align*}
+                n = 577757, n-1 = 2^2 \cdot 144439 \\
+                a = 314997
+            \end{align*}
+            \begin{align*}
+                a^{144439}         & \equiv 373220 \Mod {n} \\
+                a^{2 \cdot 144439} & \equiv -1 \Mod {n}
+            \end{align*}
+            \textit{Conclusion:} \(n\) \textit{is \textbf{probably prime}}.
+        \end{minipage}
+    \end{multicols*}
+    % Spits out numbers that overwhelmingly likely to be prime
+    % Try a candidate number, each time you try a candidate
+    % number, you have a 75% chance of getting a witness
+    % for the compositeness of the number
+    \subsection*{Shanks's Algorithm}
+    \begin{multicols*}{2}
+        \begin{align*}
+            g^x \equiv h \Mod{p}                      \\
+            p \text{ prime}                           \\
+            g \text{ primitive root}                  \\
+            N = p - 1                                 \\
+            \text{Solve for } x: g^x \equiv h \Mod{p} \\[1em]
+            n = \lceil \sqrt{N} \rceil
+        \end{align*}
+        \columnbreak
+        \begin{align*} g, g^2, g^3,       & \ldots, g^n          \\
+               g^{-n}, g^{-n+1},  & \ldots, g^{-1}       \\
+               hg^{-n}, hg^{-2n}, & \ldots, hg^{-(n-1)n} \\
+        \end{align*}
+    \end{multicols*}
+    \vspace*{-8em}
+    \begin{align*}
+        p = 101                                     \\
+        g = 2                                       \\
+        \text{Once you get } hg^{-jn} = g^i \Mod{p} \\
+        h = g^{i + jn} \Mod{p}                      \\
+    \end{align*}
+    \subsubsection*{Pollart's Rho Algorithm}
+    An improvement only in space.
+    \subsubsection*{Randomized Algorithm}
+    Work out random powers of \(g\), and random powers of \(hg\).
+    Compare the two lists, and if you find a match, you can solve for \(x\).
+    \begin{align*}
+        g^x \equiv h \Mod{p} \\
+        h = g^x \Mod{p}      \\
+        h = g^{x + kn} \Mod{p}
+    \end{align*}
+\end{multicols*}
+\pagebreak
+\begin{multicols}{2}
+    \section*{RSA}
+    \subsection*{Public Key Cryptography}
+    \begin{align*}
+        p, q      & \text{ large prime numbers} \sim 2^{1000} \\
+        N         & = pq                                      \\
+        \phi{(N)} & = (p-1)(q-1)
+    \end{align*}
+    \begin{itemize}
+        \item Encryption exponent \(e\) s.t gcd\((e, \phi(n) =1)\)
+        \item Decryption exponent \(d\) s.t \(ed \equiv 1 \Mod{\phi(N)}\)
+        \item Encrypting: \(m \rightarrow m^e \equiv c \Mod{N}\)
+        \item Decrypting: \(c \rightarrow c^d \equiv m^{ed} \equiv m \Mod{N}\)
+    \end{itemize}
+
+    \subsection*{Digital Signatures}
+    Private signing key \(d\), public verification key \(e\)
+    \begin{align*}
+        \text{Signer (Sam) } S \equiv D^d \Mod{N} \\
+        \text{Verifier (Victor) } D \equiv S^e \Mod{N}
+    \end{align*}
+
+    \section*{Size of input}
+    Given \(N\), the size of the input is \(\log_2{N}\) bits.
+
+    \section*{Group Theory}
+    \subsection*{Multiplicative Group Mod p}
+    \begin{equation*}
+        \mathbf{F}_p^x = \{1, 2, 3, \ldots, p-1\}, \text{ under multiplication modulo } p.
+    \end{equation*}
+    A group \(G\) is a set, together with a rule for combining ordered
+    pairs of elements to yield another element in the same set.
+
+    \begin{enumerate}[label=(\Roman*)]
+        \item \(e \times a = a \times e = a\) for all \(a \in G\) % Identity
+        \item \(a^{-1} \times a = a^{-1} \times a = e\) for all \(a \in G\) % Inverse
+        \item \(a \times (b \times c) = (a \times b) \times c\) for all \(a, b, c \in G\) % Associative
+    \end{enumerate}
+    All the numbers in the set must be coprime to \(p\) to form a cyclic group.
+    \begin{align*}
+        13^{-1}   & \equiv 1 \Mod{17} \\
+        13x + 17y & = 1               \\
+    \end{align*}
+    \begin{align*}
+        17 & = 1(13) + 4 \\
+        13 & = 3(4) + 1  \\
+    \end{align*}
+    \begin{align*}
+        1 & = 13 - 3(4)       \\
+          & = 13 - 3(17 - 13) \\
+          & = 4(13) - 3(17)   \\
+          & \equiv 4 \Mod{17}
+    \end{align*}
+
+    \columnbreak
+
+    \section*{Diffie-Hellman}
+    \subsection*{Key Exchange}
+    \(p\) large prime \((\sim 2^{1000})\) \\
+    \(g \in \mathbf{F}_p^x\) has \underline{large prime order} in \(\mathbf{F}_p^x\)
+    \begin{enumerate}
+        \item Alice picks \(a\) and sends \(A \equiv g^a \Mod{p}\) to Bob
+        \item Bob picks \(b\) and sends \(B \equiv g^b \Mod{p}\) to Alice
+        \item Alice computes \(B^a \equiv (g^b)^a \equiv g^{ab} \Mod{p}\)
+        \item Bob computes \(A^b \equiv (g^a)^b \equiv g^{ab} \Mod{p}\)
+    \end{enumerate}
+
+    \section*{El Gamel}
+    \begin{itemize}
+        \item Alice picks \(a\) and sends \(A \equiv g^a \Mod{p}\) to Bob
+        \item Bob chooses \(k\) and computes \(c_1 \equiv g^k, g_2 \equiv mA^k\)
+        \item Alice receives \(c_1, c_2\) and computes \(m \equiv c_2(c_1^{-a}) \Mod{p}\)
+              \begin{align*}
+                   & c_2c_2^{-a}               \\
+                   & \equiv mg^{ak} (g^k)^{-a} \\
+                   & \equiv m \Mod{p}
+              \end{align*}
+    \end{itemize}
+
+    \subsection*{Digital Signatures}
+    \begin{itemize}
+        \item Samantha chooses \(a\) (secret), computes \(A \equiv g^a \Mod{p}\)
+        \item Also chooses \(k\) coprime to \(p-1\), ie gcd\((k, p-1) = 1\)
+              \begin{align*}
+                  S_1 & = g^k \Mod{p}                \\
+                  S_2 & = (D - aS_1)k^{-1} \Mod{p-1}
+              \end{align*}
+              \subsubsection*{Verification}
+              \begin{align*}
+                  A^{S_1}S_1^{S_2} & \equiv g^D \Mod{p} \\
+              \end{align*}
+              \begin{align*}
+                  A_1^{S_1}S_1^{S_2} & = g^{aS_1}g^{\cancel{k}(D-aS_1) \cancel{k^{-1}}} \\
+                                     & = g^{aS_1}g^{D-aS_1} = g^D
+              \end{align*}
+    \end{itemize}
+\end{multicols}
+\end{document}
